@@ -4,7 +4,7 @@ const userRoute = require('./route/userRoute');
 const taskRoute = require('./route/taskRoute');
 
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./docs/swagger.json');
+const swaggerDocument = require('./docs/swagger.json'); 
 
 const app = express ();
 
