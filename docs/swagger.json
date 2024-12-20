@@ -1,0 +1,228 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "This is the API documentation for Task Management.",
+      "version": "1.0.0",
+      "title": "Task Management API",
+      "contact": {
+        "email": "support@example.com"
+      }
+    },
+    "host": "localhost:1731",
+    "basePath": "/api",
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/tasks/get-task": {
+        "get": {
+          "tags": [
+            "Tasks"
+          ],
+          "summary": "Get tasks based on status, assigned person, limit, and page",
+          "description": "Returns a list of tasks filtered by status, assigned person, limit, and page",
+          "operationId": "getTask",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "status",
+              "in": "query",
+              "description": "Status of the task",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "assignedTo",
+              "in": "query",
+              "description": "Person assigned to the task",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Page number to return",
+              "required": false,
+              "type": "integer",
+              "format": "int32"
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "description": "Number of tasks to return",
+              "required": false,
+              "type": "integer",
+              "format": "int32"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Task data fetched successfully",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/Task"
+                    }
+                  },
+                  "statusCode": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Task not found",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "statusCode": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "statusCode": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/tasks/create-task": {
+        "post": {
+          "tags": [
+            "Tasks"
+          ],
+          "summary": "Create a new task",
+          "description": "Creates a new task with the provided details",
+          "operationId": "createTask",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Task object that needs to be added",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/NewTask"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Task created successfully",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "taskData": {
+                    "$ref": "#/definitions/Task"
+                  },
+                  "statusCode": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Task already exists",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "statusCode": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "statusCode": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    
+    "definitions": {
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "assigned_to": {
+            "type": "string"
+          }
+        }
+      },
+      "NewTask": {
+        "type": "object",
+        "required": [
+          "title",
+          "desc",
+          "status",
+          "assignedTo"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "desc": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "assignedTo": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+  
