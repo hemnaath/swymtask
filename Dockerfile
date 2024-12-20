@@ -1,11 +1,11 @@
 FROM node:21-alpine
 
-WORKDIR nodejs-sample-project
+WORKDIR ./
 
-COPY package.json nodejs-sample-project
+COPY package.json ./
 
 RUN npm install
 
-COPY .  nodejs-sample-project
+COPY .  ./
 
 CMD ["npm", "start"]
